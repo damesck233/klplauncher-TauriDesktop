@@ -1,0 +1,105 @@
+name: 报告问题
+description: 启动器崩了、装不上、某个功能不对劲
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。**贴日志之前请先看一眼**：游戏日志和崩溃报告里通常带着你的用户目录名
+        （例如 `C:\Users\你的名字\…`）；`accounts.json` 和设置里的 API Key 更是不能贴。
+        请把这类内容替换掉再发出来——Issue 是公开的。
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: 发之前先确认
+      options:
+        - label: 我看过[常见问题](https://klp-launcher.com/#faq)，没有找到答案
+          required: true
+        - label: 我用的是自己合法拥有的正版 Minecraft，这个问题与破解、盗版资源无关
+          required: true
+        - label: 我贴出来的日志里没有账号令牌、API Key 或我不想公开的个人信息
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 启动器版本
+      description: 在「设置 → 关于」里看
+      placeholder: "0.1.100"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS（Apple Silicon / M 系列）
+        - 其它（请在下面说明）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: datamode
+    attributes:
+      label: 数据模式
+      description: 「设置 → 通用」里会写明当前是哪种，以及为什么
+      options:
+        - 便携模式
+        - 安装模式
+        - 不清楚
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 出了什么问题
+      description: 你原本想做什么，实际发生了什么
+      placeholder: |
+        想做的：给「大杂烩 1.20.1」装 Sodium
+        实际的：点安装之后任务中心里那一条一直停在 0%，等了十分钟没动
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 怎么复现
+      description: 一步一步写，我们照着做要能碰到同样的问题
+      placeholder: |
+        1. 打开「下载 → 模组」
+        2. 搜 Sodium，选 0.6.0
+        3. 点安装，选实例「大杂烩 1.20.1」
+        4. 打开任务中心，那一条卡在 0%
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: 出现频率
+      options:
+        - 每次都会
+        - 时有时无
+        - 只碰到过一次
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或崩溃报告
+      description: |
+        启动器日志在数据目录的 `logs/` 下；游戏崩溃报告在实例目录的 `crash-reports/` 下。
+        **贴之前把用户名、令牌、API Key 替换掉。** 内容很长的话建议贴关键的几十行，或者用附件。
+      render: text
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其它信息
+      description: 截图、显卡型号、内存大小、是不是刚更新过版本、装了哪些模组——任何你觉得相关的

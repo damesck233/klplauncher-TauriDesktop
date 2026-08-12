@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 常见问题
+    url: https://klp-launcher.com/#faq
+    about: 装不上、下载慢、便携版和安装版的区别、支持哪些系统——先看这里，多数问题这里有答案。
+  - name: 隐私与条款
+    url: https://klp-launcher.com/privacy.html
+    about: 数据发到哪、存在哪、怎么关掉 AI。
+  - name: 写信给我们
+    url: mailto:admin@klp-launcher.com
+    about: 涉及账号、隐私、条款，或者内容不方便公开贴出来的，请走邮件而不是 Issue。
