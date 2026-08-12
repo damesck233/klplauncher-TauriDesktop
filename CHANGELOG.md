@@ -1,71 +1,71 @@
-# 更新记录
+# Changelog
 
-面向用户的版本记录。日期为发布日。
+User-facing release notes. Dates are release dates. 中文版：[CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md)
 
-> 启动器目前处于**内测阶段**，版本号推进得比较密集——其中有几个号是更新链路
-> 本身在调试时用掉的测试版（0.1.94、0.1.96、0.1.99），没有面向用户的功能变化，
-> 下面不单独列。
+> The launcher is in **closed beta**, so version numbers move quickly — and a few of them
+> (0.1.94, 0.1.96, 0.1.99) were test builds burned while debugging the update pipeline
+> itself. They carried no user-facing changes and are not listed separately.
 
 ---
 
 ## 0.1.100 — 2026-08-11
 
-**修复**
+**Fixed**
 
-- 便携版自更新在下载时进度条不动、一直停在 `0.0 MB`，看起来像卡死。现在会实时显示已下载的大小。
-- 给更新下载加了总超时。此前连接僵住的表现和「下载很慢」一模一样，只能干等。
+- On the portable build, self-update showed no download progress and sat at `0.0 MB`, which looked like a hang. It now reports the downloaded size as it goes.
+- Added an overall timeout to the update download. Previously a stalled connection looked exactly like a slow download, leaving nothing to do but wait.
 
 ## 0.1.98 — 2026-08-11
 
-**修复**
+**Fixed**
 
-- 便携版自更新报「签名验证没过」导致无法更新。
-- 更新失败时的提示过于笼统（只有一句「下载更新包失败」），现在会写明具体是哪一层出的问题。
+- Self-update on the portable build failed with a signature verification error.
+- Update failures reported a single generic line ("failed to download the update"); the message now names the layer that actually failed.
 
 ## 0.1.97 — 2026-08-11
 
-**变更**
+**Changed**
 
-- **便携版的更新改为就地替换程序本身。** 此前走的是安装器，会把新版本装到另一个目录，导致更新完之后打开的还是旧的那份、实例像是「消失」了。
-- **数据模式默认改为便携模式。** 只有用安装器安装的那一份才走系统用户目录；便携版因此可以只分发一个可执行文件，不用再附带其他文件。
-- 此前「系统目录里已经有数据就自动切回安装模式」的判断被去掉了——它会让更新后的便携版莫名其妙变回安装模式。系统目录里剩下的实例改为在设置页给出提示。
+- **The portable build now updates by replacing the program in place.** It previously went through the installer, which put the new version in a different directory — so after updating you were still opening the old copy, and your instances appeared to have vanished.
+- **Portable is now the default data mode.** Only a copy put there by the installer uses the system user directory, which means the portable build can ship as a single executable with no accompanying files.
+- Removed the rule that switched back to installed mode whenever the system directory already held data — it made updated portable builds flip modes for no visible reason. Instances left behind in the system directory are now surfaced as a notice in settings.
 
-**改进**
+**Improved**
 
-- 设置页会写出**当前为什么是这个数据模式**，不用再猜。
+- Settings now states **why the current data mode is what it is**, instead of leaving you to guess.
 
 ## 0.1.95 — 2026-08-11
 
-**新增**
+**Added**
 
-- **外置登录**（authlib-injector / 第三方 Yggdrasil）：登录向导、启动注入与账户界面。
-- **游戏目录迁移**：设置页新增迁移卡，逐条摊开「从哪搬到哪」，两步确认才执行，可回滚。
-- 隔离实例的游戏目录改为落在**你自己的游戏文件夹**（`<游戏文件夹>/versions/<版本ID>`），不再塞进启动器的私有数据目录，并带撞车检测。
+- **Third-party authentication** (authlib-injector / third-party Yggdrasil): sign-in wizard, launch-time injection, and account management UI.
+- **Game directory migration**: a card in settings that lays out every "from → to" pair, requires two-step confirmation, and can be rolled back.
+- Isolated instances now keep their game directory **inside your own game folder** (`<game folder>/versions/<version id>`) instead of the launcher's private data directory, with collision detection.
 
-**改进**
+**Improved**
 
-- AI 聊天：紧挨着的两段思考过程合并成一块；正在思考时只剩一个绿点，不再有多余文字。
+- AI chat: two adjacent reasoning blocks are merged into one; while thinking, only a green dot remains instead of extra text.
 
 ## 0.1.93 — 2026-08-11
 
-**修复**
+**Fixed**
 
-- 明确要求安装 Java 时，不再拿系统里现成的顶包——修复「点了下载却什么都没装」。
+- When Java was explicitly requested for download, an existing system installation no longer silently substitutes for it — fixing "I clicked download and nothing was installed".
 
-**改进**
+**Improved**
 
-- AI 正在输出时，底部的下载胶囊会让位，不再互相遮挡。
+- The download pill at the bottom now yields space while the AI is streaming, so the two no longer overlap.
 
 ## 0.1.92 — 2026-08-11
 
-**修复**
+**Fixed**
 
-- Windows 上强制更新页白屏。
-- 便携模式放在只读介质上时直接起不来，现在会自动退回按安装版的方式存数据。
-- 首页资讯翻页时，正式版不再错误地落到下载页。
+- Blank forced-update screen on Windows.
+- The portable build failed to start at all from read-only media; it now falls back to storing data the way the installed build does.
+- Paging through news on the home screen no longer sends stable releases to the download page.
 
 ---
 
-更早的版本为内测早期构建，没有对外发布记录。
+Earlier versions were early closed-beta builds with no public release record.
 
-有问题或建议：开一个 [Issue](https://github.com/damesck233/klplauncher-TauriDesktop/issues/new/choose)，或写信到 admin@klp-launcher.com。
+Questions or suggestions: open an [issue](https://github.com/damesck233/klplauncher-TauriDesktop/issues/new/choose) or write to admin@klp-launcher.com.

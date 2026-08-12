@@ -1,31 +1,34 @@
-name: 报告问题
-description: 启动器崩了、装不上、某个功能不对劲
+name: Bug report
+description: A crash, a failed install, or something behaving incorrectly
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        感谢反馈。**贴日志之前请先看一眼**：游戏日志和崩溃报告里通常带着你的用户目录名
-        （例如 `C:\Users\你的名字\…`）；`accounts.json` 和设置里的 API Key 更是不能贴。
-        请把这类内容替换掉再发出来——Issue 是公开的。
+        Thanks for reporting. **Before you paste a log**: game logs and crash reports usually
+        contain your home directory name (for example `C:\Users\YourName\…`), and
+        `accounts.json` or an API key must never be pasted at all. Please redact that sort of
+        thing first — issues are public.
+
+        中文用户可以直接用中文填写。
 
   - type: checkboxes
     id: preflight
     attributes:
-      label: 发之前先确认
+      label: Before you file
       options:
-        - label: 我看过[常见问题](https://klp-launcher.com/#faq)，没有找到答案
+        - label: I have read the [FAQ](https://klp-launcher.com/en/#faq) and did not find an answer
           required: true
-        - label: 我用的是自己合法拥有的正版 Minecraft，这个问题与破解、盗版资源无关
+        - label: I am using a copy of Minecraft I legitimately own, and this is not related to cracked clients or pirated content
           required: true
-        - label: 我贴出来的日志里没有账号令牌、API Key 或我不想公开的个人信息
+        - label: The logs I am pasting contain no account tokens, API keys or personal information I would not want public
           required: true
 
   - type: input
     id: version
     attributes:
-      label: 启动器版本
-      description: 在「设置 → 关于」里看
+      label: Launcher version
+      description: Shown under Settings → About
       placeholder: "0.1.100"
     validations:
       required: true
@@ -33,73 +36,75 @@ body:
   - type: dropdown
     id: os
     attributes:
-      label: 操作系统
+      label: Operating system
       options:
         - Windows 11
         - Windows 10
-        - macOS（Apple Silicon / M 系列）
-        - 其它（请在下面说明）
+        - macOS (Apple Silicon)
+        - Other (describe below)
     validations:
       required: true
 
   - type: dropdown
     id: datamode
     attributes:
-      label: 数据模式
-      description: 「设置 → 通用」里会写明当前是哪种，以及为什么
+      label: Data mode
+      description: Settings → General states which mode is active and why
       options:
-        - 便携模式
-        - 安装模式
-        - 不清楚
+        - Portable
+        - Installed
+        - Not sure
     validations:
       required: true
 
   - type: textarea
     id: what-happened
     attributes:
-      label: 出了什么问题
-      description: 你原本想做什么，实际发生了什么
+      label: What went wrong
+      description: What you were trying to do, and what actually happened
       placeholder: |
-        想做的：给「大杂烩 1.20.1」装 Sodium
-        实际的：点安装之后任务中心里那一条一直停在 0%，等了十分钟没动
+        Trying to: install Sodium into "Kitchen Sink 1.20.1"
+        What happened: the task sat at 0% in the task centre for ten minutes and never moved
     validations:
       required: true
 
   - type: textarea
     id: steps
     attributes:
-      label: 怎么复现
-      description: 一步一步写，我们照着做要能碰到同样的问题
+      label: Steps to reproduce
+      description: Step by step — we should hit the same problem by following them
       placeholder: |
-        1. 打开「下载 → 模组」
-        2. 搜 Sodium，选 0.6.0
-        3. 点安装，选实例「大杂烩 1.20.1」
-        4. 打开任务中心，那一条卡在 0%
+        1. Open Downloads → Mods
+        2. Search for Sodium, pick 0.6.0
+        3. Click install, choose the instance "Kitchen Sink 1.20.1"
+        4. Open the task centre — the task is stuck at 0%
     validations:
       required: true
 
   - type: dropdown
     id: frequency
     attributes:
-      label: 出现频率
+      label: How often does it happen
       options:
-        - 每次都会
-        - 时有时无
-        - 只碰到过一次
+        - Every time
+        - Intermittently
+        - Only saw it once
     validations:
       required: true
 
   - type: textarea
     id: logs
     attributes:
-      label: 日志或崩溃报告
+      label: Logs or crash report
       description: |
-        启动器日志在数据目录的 `logs/` 下；游戏崩溃报告在实例目录的 `crash-reports/` 下。
-        **贴之前把用户名、令牌、API Key 替换掉。** 内容很长的话建议贴关键的几十行，或者用附件。
+        Launcher logs are under `logs/` in the data directory; game crash reports are under
+        `crash-reports/` in the instance directory.
+        **Redact usernames, tokens and API keys first.** If it is very long, paste the
+        relevant few dozen lines or attach a file.
       render: text
 
   - type: textarea
     id: extra
     attributes:
-      label: 其它信息
-      description: 截图、显卡型号、内存大小、是不是刚更新过版本、装了哪些模组——任何你觉得相关的
+      label: Anything else
+      description: Screenshots, GPU model, memory size, whether you had just updated, which mods are installed — anything you think is relevant

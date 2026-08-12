@@ -1,38 +1,41 @@
-# 界面截图
+# Screenshots
 
-**这个目录还是空的** —— 截图得从跑着真实数据的启动器上截，凭空造图没有意义，
-所以留在这里等实机截。
+**This directory is still empty.** Screenshots have to come from a launcher running real
+data — mocking them up would be pointless — so this is waiting on captures from an actual
+install.
 
-## 要哪几张
+## What is needed
 
-按重要性排序。前四张是 CurseForge 申请与 README 展示最用得上的：
+In order of importance. The first four are the ones the README and the CurseForge
+application actually need:
 
-| 文件名 | 截什么 | 注意 |
+| Filename | What to capture | Notes |
 |---|---|---|
-| `home.png` | 首页：继续游玩卡 + 最近实例 | 最能一眼看出「这是个真启动器」 |
-| `instances.png` | 实例列表：多个实例、不同加载器 | 体现实例隔离 |
-| `download-mods.png` | 下载页的模组浏览 | **CurseForge 申请重点**：能看出接入了资源站 |
-| `ai-confirm.png` | AI 助手弹出确认卡的那一刻 | 体现「动手前先确认」 |
-| `tasks.png` | 任务中心：几条进行中的下载 | |
-| `servers.png` | 服务器广场：在线人数与延迟 | |
-| `settings.png` | 设置页 | |
+| `home.png` | Home screen: the continue-playing card plus recent instances | The single best "this is a real launcher" shot |
+| `instances.png` | Instance list with several instances on different loaders | Shows instance isolation |
+| `download-mods.png` | Mod browsing on the Downloads page | **Key shot for the CurseForge application** — shows the content sources are wired up |
+| `ai-confirm.png` | The AI assistant with a confirmation card open | Shows "nothing runs until you approve it" |
+| `tasks.png` | Task centre with a few downloads in progress | |
+| `servers.png` | Server directory with player counts and latency | |
+| `settings.png` | Settings | |
 
-## 截之前
+## Before capturing
 
-- **窗口尺寸统一**，建议 1280×800 或 1440×900，深浅色主题选一种，别混着来。
-- **抹掉个人信息**：账号名、皮肤头像、真实用户名路径（`C:\Users\你的名字\…`）、服务器 IP。
-  这些图是公开的。
-- 实例名和模组用真实的就行，看起来才不像 demo。
-- PNG，不要缩放，不要加边框和阴影（GitHub 自己会处理）。
+- **Use one window size throughout** — 1280×800 or 1440×900 — and pick one theme, light or
+  dark. Do not mix.
+- **Redact personal information**: account names, skin avatars, real home directory paths
+  (`C:\Users\YourName\…`), server IPs. These images are public.
+- Real instance names and real mods are fine and make it look less like a demo.
+- PNG, unscaled, no added borders or drop shadows (GitHub handles that).
 
-## 放进来之后
+## Once they are here
 
-在仓库根目录的 `README.md` 里加一节引用它们，例如：
+Add a section to the repository's `README.md` referencing them, for example:
 
 ```markdown
-## 界面
+## Screenshots
 
-| 首页 | 实例 |
+| Home | Instances |
 |---|---|
-| ![首页](docs/screenshots/home.png) | ![实例](docs/screenshots/instances.png) |
+| ![Home](docs/screenshots/home.png) | ![Instances](docs/screenshots/instances.png) |
 ```

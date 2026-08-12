@@ -1,94 +1,96 @@
-# 隐私政策
+# Privacy Policy
 
-**最后更新：2026 年 8 月 11 日**
+**Last updated: 11 August 2026**
 
-> 本文与官网 <https://klp-launcher.com/privacy.html> 内容一致；两者如有出入，
-> 以官网页面上标注日期较新的版本为准。
+> 中文版：[PRIVACY.zh-CN.md](PRIVACY.zh-CN.md)
+>
+> This page matches <https://klp-launcher.com/en/privacy.html>; where they differ, the
+> version on the website bearing the later date prevails.
 
-苦力怕启动器是一个装在你自己电脑上的桌面程序。它的绝大部分工作——管理实例、下载游戏文件、启动游戏——都发生在本机，不经过我们的服务器。这份政策逐条说明它到底会往外发什么、发给谁、存在哪。写在这里的每一句都对应启动器里的具体实现；如果你发现哪一句跟实际行为对不上，写信告诉我们，我们会改这一页或者改实现。
+KLP Launcher is a desktop program that runs on your own computer. Almost everything it does — managing instances, downloading game files, launching the game — happens locally and never passes through our servers. This page states exactly what leaves your machine, where it goes, and where things are stored. Every sentence here corresponds to specific behaviour in the launcher. If you find one that does not match what it actually does, write to us and we will fix either this page or the implementation.
 
-## 账号与登录
+## Accounts and sign-in
 
-**启动器不经手、不显示、也不保存你的微软密码。**
+**The launcher never handles, displays or stores your Microsoft password.**
 
-登录走微软官方的设备码流程：启动器只显示一个验证网址和一段验证码，你在自己的浏览器里、在微软自己的页面上完成登录。密码从头到尾没有进过启动器的任何输入框。
+Sign-in uses Microsoft's official device code flow: the launcher shows you a verification URL and a short code, and you complete the sign-in in your own browser, on Microsoft's own page. Your password never passes through any field in the launcher.
 
-登录成功之后，启动器保存的是微软和 Minecraft 服务返回的令牌（刷新令牌、访问令牌、有效期、Xbox 用户标识），用来在下次启动游戏时免去重新登录。如果某种登录方式需要你输入密码，那串密码只用于向对应的登录服务发起当次请求，请求结束即从内存和落盘数据中清除，不保存、不上传。
+After a successful sign-in, what the launcher stores are the tokens returned by the Microsoft and Minecraft services (refresh token, access token, expiry, Xbox user id), so that you do not have to sign in again next time. If any sign-in method requires you to type a password, that password is used only for that one request to the corresponding sign-in service and is cleared from memory and from stored data as soon as the request finishes. It is never persisted and never uploaded.
 
-### 令牌存在哪里
+### Where tokens are stored
 
-这一条各平台不一样，我们如实写清楚：
+This differs by platform, and we state it plainly rather than generalising:
 
-- **macOS · 安装模式**：存进系统钥匙串（Keychain），由操作系统加密保管。
-- **Windows、Linux，以及任何平台的便携模式 / 自定义数据目录**：存在数据目录下的 `accounts.json` 里，文件权限设为仅当前用户可读写（0600），但**没有额外加密**。接入 Windows 凭据管理器（DPAPI）是已知的待办项。
+- **macOS, installed mode**: in the system Keychain, encrypted by the operating system.
+- **Windows, Linux, and portable mode / a custom data directory on any platform**: in `accounts.json` inside the data directory, with file permissions restricted to the current user (0600), but **without additional encryption**. Integrating the Windows Credential Manager (DPAPI) is a known outstanding item.
 
-> ⚠️ 换句话说：在 Windows / Linux 上，或者你用的是便携版，能读到你数据目录的程序就能读到这些令牌。便携版整个文件夹拷到 U 盘时，令牌也会跟着走。这是便携模式的固有代价，不是疏忽——但你应该知道。
+> ⚠️ In other words: on Windows and Linux, or whenever you use the portable build, any program that can read your data directory can read those tokens. If you copy a portable folder onto a USB stick, the tokens travel with it. That is an inherent cost of portable mode rather than an oversight — but you should know about it.
 
-无论哪种情况，这些令牌都**不会发到我们的服务器**。它们只发给微软、Xbox Live 和 Minecraft 的官方接口，用于登录游戏本身。
+In every case, these tokens are **never sent to our servers**. They only go to the official Microsoft, Xbox Live and Minecraft endpoints, to sign you in to the game itself.
 
-## 我们不收集什么
+## What we do not collect
 
-- **没有任何遥测、埋点或使用统计。** 启动器里不存在这样的代码。
-- **没有崩溃自动上报。** 游戏崩了不会有任何东西自动发出去。
-- 不收集你的账号密码、令牌或任何凭据。
-- 不收集你的存档、世界或模组文件的内容。
-- 没有广告、没有第三方跟踪脚本。官网本身也是零 JavaScript、零外部请求。
+- **No telemetry, analytics or usage statistics of any kind.** No such code exists in the launcher.
+- **No automatic crash reporting.** When the game crashes, nothing is sent anywhere on its own.
+- No passwords, tokens or credentials of any kind.
+- No contents of your saves, worlds or mod files.
+- No ads and no third-party tracking scripts. The website itself has zero JavaScript and makes no external requests.
 
-## 启动器会连我们的服务器做什么
+## What the launcher asks our servers for
 
-启动器会向 `api.klp-launcher.com` 发三类请求，**都是下行取内容，不带你的任何身份信息**：
+The launcher makes three kinds of request to `api.klp-launcher.com`. **All of them fetch content downward and carry no identifying information about you**:
 
-- **检查更新**：请求路径里只有两样东西——操作系统（`windows` / `darwin` / `linux`）和 CPU 架构（如 `x86_64` / `aarch64`）。不带当前版本号、不带机器标识、不带账号。
-- **资讯与服务器广场的内容**：取列表和详情，跟你在网页上浏览一样。
-- **AI 助手的系统提示词与技能手册**：这是下发给启动器的文本，带数字签名，验不过就退回程序内置的版本。这条通道只往下走，不往上传任何东西。
+- **Update checks**: the request path contains only two things — the operating system (`windows` / `darwin` / `linux`) and the CPU architecture (such as `x86_64` or `aarch64`). No current version number, no machine identifier, no account information.
+- **News and server-directory content**: fetching lists and detail pages, the same as browsing a website.
+- **The AI assistant's system prompt and skill manual**: text sent down to the launcher, cryptographically signed; if the signature does not verify, the launcher falls back to the copy built into the program. This channel only goes downward and uploads nothing.
 
-和任何网络请求一样，我们的服务器在处理这些请求时会看到你的 IP 地址。我们不用它做画像，也不把它和任何账号关联。
+As with any network request, our server sees your IP address while handling these. We do not use it for profiling and do not associate it with any account.
 
-## AI 助手
+## The AI assistant
 
-**AI 助手不经过我们的服务器。** 启动器直接连你自己在设置里填的模型服务地址，用你自己的 API Key。对话内容、日志、模组清单——这些东西我们一个字都收不到，也就无从留存。
+**The AI assistant does not go through our servers.** The launcher connects directly to the model service endpoint you enter in settings, using your own API key. Conversations, logs, mod lists — we never receive any of it, so there is nothing for us to retain.
 
-代价是：这些内容会发给你选的那家模型服务商，它怎么处理、留存多久，取决于你和它之间的协议，不在我们的控制范围内。所以下面这份「会发出去什么」的清单，请当成是你在把它交给第三方时的知情清单。
+The trade-off is that this content does go to the model provider you chose. How they handle and retain it is governed by your agreement with them and is outside our control. Please read the list below as a disclosure of what you are handing to a third party.
 
-### 你主动发问、或让它排查问题时，可能被发出去的内容
+### What may be sent when you ask a question or ask it to diagnose a problem
 
-- 你输入的问题本身，以及这一轮对话的上下文。
-- 游戏日志（默认取 `latest.log` 末尾若干内容并做要点提取，必要时你可以让它读全文）。
-- 崩溃报告全文。
-- 实例里的模组清单与版本、加载器信息。
-- 设备信息：CPU 型号与核数、机器型号、架构、内存大小、操作系统名称与版本、磁盘剩余空间。
-- 文件路径，包括 Java 安装路径和实例路径。
+- Your question itself and the context of the current conversation.
+- Game logs (by default the tail of `latest.log`, distilled to the important lines; you can also ask it to read the full file).
+- The full text of crash reports.
+- The mod list of the instance, along with versions and loader information.
+- Device information: CPU model and core count, machine model, architecture, memory size, operating system name and version, free disk space.
+- File paths, including Java installation paths and instance paths.
 
-> ⚠️ 启动器目前**不对这些内容做任何脱敏处理**。日志、崩溃报告和路径里通常包含你的用户目录名（例如 `C:\Users\你的名字\…`），如果你的系统用户名是真名，它会原样出现在发给模型服务商的内容里。这是当前实现的事实，我们把它写在这里而不是含糊带过。
+> ⚠️ The launcher currently **performs no redaction on any of this**. Logs, crash reports and paths normally contain your home directory name (for example `C:\Users\YourName\…`), so if your system username is your real name, it will appear verbatim in what is sent to the model provider. This is what the current implementation does, and we would rather state it than gloss over it.
 
-### 对话存在哪
+### Where conversations are stored
 
-只在你自己的电脑上：数据目录下的 `ai/sessions/`，一个会话一个文件。我们的服务器上没有任何存放对话的地方——**服务端根本没有接收对话的接口**。
+Only on your own computer, under `ai/sessions/` in the data directory, one file per conversation. There is no place on our servers where conversations are kept — **the server has no endpoint that receives them at all**.
 
-### 怎么关掉
+### How to turn it off
 
-AI 助手需要你在设置里填模型服务地址、模型名和 API Key 之后才能工作。不填就用不了，也就不会发出任何东西。已经填过想停用，把这几项清空即可。API Key 与账号令牌存在同一个地方（macOS 安装模式进钥匙串，其余情况是 0600 的本地文件），不写进设置文件，也不会随设置一起被导出。
+The AI assistant only works once you have entered a model service endpoint, a model name and an API key in settings. Leave them empty and it cannot run, so nothing is sent. If you have already configured it and want to stop using it, clear those fields. The API key is stored in the same place as account tokens (the Keychain on macOS in installed mode, an 0600 local file otherwise); it is not written into the settings file and is not included when settings are exported.
 
-## 会用到的第三方服务
+## Third-party services
 
-启动器按你的操作向下面这些服务发请求。它们各自有自己的隐私政策，我们无法代为承诺。
+The launcher contacts the following services in response to what you do. Each has its own privacy policy, which we cannot make promises on behalf of.
 
-- **微软 / Mojang**：登录认证与游戏本体、资源、库文件的下载。
-- **Modrinth、CurseForge**：模组、整合包、资源包的搜索与下载。
-- **BMCLAPI 等镜像节点**：加速游戏文件下载，可在设置里切换或关闭。
-- **Fabric、Forge、NeoForge、Quilt 的官方源**：加载器文件。
-- **Adoptium**：按实例所需版本自动下载 Java 运行时。
-- **MC 百科、Bilibili、搜索引擎**：AI 助手查资料时用，只在它需要检索时才发请求。
-- **Crafatar**：按你的账号 UUID 取皮肤头像。
+- **Microsoft / Mojang**: authentication, and downloading the game itself, its assets and libraries.
+- **Modrinth, CurseForge**: searching for and downloading mods, modpacks and resource packs.
+- **Mirror nodes**: faster downloads of game files; switchable or disableable in settings.
+- **The official Fabric, Forge, NeoForge and Quilt sources**: loader files.
+- **Adoptium**: automatically downloading the Java runtime an instance needs.
+- **Reference sites, video sites and search engines**: used by the AI assistant when it looks something up, only when it needs to.
+- **Crafatar**: fetching your skin avatar by account UUID.
 
-## 儿童隐私
+## Children's privacy
 
-启动器不面向儿童单独收集任何信息，也不设立自己的账号体系。游戏账号本身由微软管理，其家长控制与年龄相关的规定以微软的政策为准。
+The launcher does not separately collect information from children and has no account system of its own. Game accounts are managed by Microsoft; parental controls and age-related rules are governed by Microsoft's policies.
 
-## 这份政策的变更
+## Changes to this policy
 
-功能变了、数据流向变了，这一页就要跟着改，并更新顶部的日期。如果某次改动让这一页过时了，那是我们的疏忽——请写信指出来。
+When features change and data flows change, this page changes with them and the date at the top is updated. If a change ever leaves this page out of date, that is an oversight on our part — please write in and point it out.
 
-## 联系我们
+## Contact
 
-隐私相关的问题、更正请求，或者你发现这一页哪句话跟实际实现对不上：写信到 **admin@klp-launcher.com**。
+For privacy questions, correction requests, or if you find a sentence on this page that does not match the actual implementation: write to **admin@klp-launcher.com**.

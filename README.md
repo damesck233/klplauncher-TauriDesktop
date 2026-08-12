@@ -1,95 +1,97 @@
 <div align="center">
 
-# 苦力怕启动器 · KlpLauncher
+# KLP Launcher · 苦力怕启动器
 
-**一个中文 Minecraft 启动器：管理实例、模组、存档与服务器，内置会动手的 AI 助手。**
+**A Minecraft launcher for Chinese-speaking players: manage instances, mods, worlds and servers, with an AI assistant that actually does the work.**
 
-免费 · 无广告 · 不捆绑 · 内测中
+Free · No ads · Nothing bundled · In closed beta
 
-[官网](https://klp-launcher.com/) · [English](https://klp-launcher.com/en/) · [隐私政策](PRIVACY.md) · [使用条款](LICENSE) · [更新记录](CHANGELOG.md)
+[Website](https://klp-launcher.com/en/) · [中文说明](README.zh-CN.md) · [Privacy](PRIVACY.md) · [Terms](LICENSE) · [Changelog](CHANGELOG.md)
 
 </div>
 
 ---
 
 > [!IMPORTANT]
-> **本仓库不包含源代码。** 这里只放面向用户的文档、更新记录、法务条款和问题反馈入口。
-> 启动器本体的版权归苦力怕团队所有，保留一切权利，详见 [LICENSE](LICENSE)。
+> **This repository does not contain source code.** It holds the user-facing documentation,
+> changelog, legal terms and issue tracker. The launcher itself is copyright of the KLP team,
+> all rights reserved — see [LICENSE](LICENSE).
 
 > [!NOTE]
-> **启动器正在向 Mojang 申请 Minecraft API 权限，在通过之前不提供公开下载。**
-> 通过之后会第一时间在[官网](https://klp-launcher.com/)放出。想知道进展，写信到 admin@klp-launcher.com。
+> **The launcher is applying for Minecraft API access from Mojang. Until that is approved,
+> no download is offered.** It will be published on the [website](https://klp-launcher.com/en/)
+> as soon as it goes through. To ask about progress, write to admin@klp-launcher.com.
 
-## 这是什么
+## What this is
 
-苦力怕启动器是一个装在你自己电脑上的桌面程序。管理实例、下载游戏文件、启动游戏这些事全部发生在本机，不经过我们的服务器。
+KLP Launcher is a desktop program that runs on your own computer. Managing instances, downloading game files and launching the game all happen locally and never pass through our servers.
 
-技术上它是 **Rust 核心 + 各平台原生 UI**：领域逻辑（下载引擎、Java 探测、启动链路、认证、日志解析）用 Rust 写一份，桌面端用 Tauri 2 + Svelte 5 承载界面，另有一个 SwiftUI 的 macOS 客户端共用同一套核心。
+Technically it is a **shared Rust core with native UI per platform**: the domain logic (download engine, Java detection, launch pipeline, authentication, log parsing) is written once in Rust; the desktop client is built on Tauri 2 and Svelte 5, and a separate SwiftUI client for macOS shares the same core.
 
-## 功能
+## Features
 
-### 实例与模组
+### Instances and mods
 
-- **实例完全隔离** —— 每个实例有独立的模组、配置和存档，改一个不会影响另一个，切换版本不用重装
-- **模组一键装** —— 搜索、安装、更新、禁用在同一个列表里；**前置依赖自动补齐**，版本不匹配会提前告诉你
-- **存档备份** —— 按计划备份，也能手动打快照，可回滚到任意时间点
-- **导入现有实例** —— 直接读 `.minecraft` 目录或其他启动器的实例文件夹，模组、存档、配置一并识别，**原目录不会被改动**
-- **加载器** —— Fabric / Forge / NeoForge / Quilt，以及 OptiFine
-- **Java 自动准备** —— 按实例所需的版本从 Adoptium 下载，不用自己装
+- **Fully isolated instances** — each instance keeps its own mods, config and worlds, so changing one never touches another. Switching versions needs no reinstall.
+- **One-click mods** — search, install, update and disable from the same list. **Dependencies are pulled in automatically**, and version conflicts are flagged before you install.
+- **Automatic world backups** — back up on a schedule or snapshot by hand, and roll back to any point in time.
+- **Import existing instances** — point it at a `.minecraft` directory or another launcher's instance folder; mods, worlds and config are all recognised, and **the original directory is left untouched**.
+- **Loaders** — Fabric, Forge, NeoForge, Quilt, and OptiFine.
+- **Java handled for you** — the runtime an instance needs is downloaded automatically from Adoptium, so there is nothing to install yourself.
 
-### 下载
+### Downloads
 
-- 默认走 BMCLAPI 等国内镜像节点，多线程并发，**并发数可调**（可在设置里切换下载源或降低并发避开限速）
-- 资源来自 **Modrinth** 与 **CurseForge**，模组 / 整合包 / 资源包 / 光影分类浏览
-- 安装前会告诉你哪个实例装得上、缺什么前置
-- 所有下载与安装集中在任务中心，可暂停、可取消、可重试
+- Regional mirror nodes with multi-threaded downloads and **adjustable concurrency** (the source can be switched, or concurrency lowered to stay under a rate limit).
+- Content comes from **Modrinth** and **CurseForge** — mods, modpacks, resource packs and shaders, browsable by category.
+- Before installing, it tells you which instances the item fits and what dependencies are missing.
+- Every download and install is collected in one task centre: pause, cancel, retry.
 
-### AI 助手
+### AI assistant
 
-它读得到你的实例、模组列表和崩溃日志，找模组、装整合包、排查冲突可以直接说。
+It can read your instances, mod lists and crash logs. Find a mod, install a modpack, track down a conflict — one sentence is enough.
 
-- **动手前先确认** —— 任何写入、修改、删除都要你在确认卡上点确认才执行，卡上写清改什么、影响哪些实例，可以逐条取消
-- **破坏性操作单独标记** —— 删除实例这类不可撤销的操作会单独列出会删什么、不动什么
-- **模型自己配** —— 在设置里填你自己的模型服务地址与密钥。**对话不经过我们的服务器**，我们收不到也存不了；不填就用不了，也可以整块关掉
-- **崩溃日志分析** —— 游戏崩了，启动器读日志指出是哪个模组、哪一行的问题，给出可执行的修复建议
+- **Confirm before it acts** — every write, change or deletion opens a confirmation card first, spelling out what it will do and which instances it affects. Cancel any line item. Nothing runs until you approve it.
+- **Destructive actions marked apart** — irreversible things like deleting an instance list exactly what goes and what stays.
+- **Bring your own model** — point it at your own model endpoint and API key in settings. **Conversations never pass through our servers**; we cannot receive or store them. Leave the fields empty and the feature simply does not run, or turn it off entirely.
+- **Crash log analysis** — when the game crashes, the launcher reads the log, points at the mod and the line, and suggests a fix you can act on.
 
-### 服务器广场
+### Server directory
 
-按版本、玩法、加载器筛选，实时显示在线人数与延迟。点「加入」会匹配对应版本的实例，缺哪个模组就补哪个，进服前先检查一遍。
+Filter by version, play style and loader, with live player counts and latency. Hitting *Join* matches the right instance for that version, adds whatever mods are missing, and runs a check before you connect.
 
-## 支持的系统
+## Supported systems
 
-| 系统 | 状态 |
+| System | Status |
 |---|---|
-| Windows 10 / 11（x64） | 支持 |
-| macOS 12 及以上（Apple Silicon，M 系列） | 支持 |
-| macOS（Intel / x86） | 没有构建 |
-| Linux | 暂未支持 |
+| Windows 10 / 11 (x64) | Supported |
+| macOS 12 and later (Apple Silicon) | Supported |
+| macOS (Intel / x86) | No build |
+| Linux | Not supported yet |
 
-**便携版与安装版功能一致**，区别只在数据放哪：便携版把数据放在程序自己的目录里，整个文件夹拷到 U 盘就能带走，卸载就是删文件夹；安装版放在系统的用户目录下。放在只读介质上时，便携版会自动退回按安装版的方式存数据。
+**The portable and installed builds are functionally identical**; they differ only in where data lives. The portable build keeps its data next to the program, so the whole folder can travel on a USB stick and uninstalling means deleting it. The installed build stores data in your user directory. On read-only media the portable build falls back to storing data the way the installed build does.
 
-## 隐私
+## Privacy
 
-完整说明见 [PRIVACY.md](PRIVACY.md)，要点：
+Full details in [PRIVACY.md](PRIVACY.md). In short:
 
-- **没有任何遥测、埋点或使用统计**，也没有崩溃自动上报
-- **不收集**账号密码、令牌、存档、世界或模组文件的内容
-- 登录走微软官方的**设备码流程**，密码从头到尾没有进过启动器的任何输入框；令牌只发给微软 / Xbox Live / Minecraft 的官方接口，不发到我们的服务器
-- 启动器只向 `api.klp-launcher.com` 取三类内容（检查更新、资讯与服务器列表、AI 系统提示词），**都是下行，不带任何身份信息**
-- AI 对话直连你自己配置的模型服务商，我们的服务端**没有接收对话的接口**
+- **No telemetry, analytics or usage statistics**, and no automatic crash reporting.
+- **We do not collect** passwords, tokens, or the contents of your saves, worlds or mod files.
+- Sign-in uses Microsoft's **official device code flow** — your password never passes through any field in the launcher. Tokens go only to the official Microsoft, Xbox Live and Minecraft endpoints, never to our servers.
+- The launcher asks `api.klp-launcher.com` for three things only (update checks, news and server listings, the AI system prompt). **All downward, carrying no identifying information.**
+- AI conversations go directly to the model provider you configured. Our server **has no endpoint that receives them at all**.
 
-隐私政策里也写明了当前实现的两个已知代价（Windows / Linux / 便携模式下令牌是 0600 的本地文件而非系统加密保管；AI 目前不对发出去的日志与路径做脱敏），我们把它写出来而不是含糊带过。
+The policy also states two known costs of the current implementation rather than glossing over them: on Windows, Linux and in portable mode, tokens sit in a 0600 local file rather than OS-encrypted storage; and the AI performs no redaction on the logs and paths it sends out.
 
-## 反馈问题
+## Reporting problems
 
-- **报 Bug / 提需求**：开一个 [Issue](https://github.com/damesck233/klplauncher-TauriDesktop/issues/new/choose)
-- **其它**（装不上、启动崩、隐私相关、条款问题）：写信到 admin@klp-launcher.com
+- **Bugs and feature requests**: open an [issue](https://github.com/damesck233/klplauncher-TauriDesktop/issues/new/choose).
+- **Anything else** (install failures, crashes, privacy, terms): write to admin@klp-launcher.com.
 
-目前处于内测阶段，每一封都会有人看。
+The project is in closed beta and every message gets read.
 
-## 法务
+## Legal
 
-**你需要自行拥有正版 Minecraft。** 启动器不提供、不分发、不代购游戏授权，也不支持任何绕过正版验证的用途。详见 [LICENSE](LICENSE)。
+**You must own Minecraft yourself.** The launcher does not provide, distribute or resell a game licence, and does not support any use that bypasses authentication. See [LICENSE](LICENSE).
 
 ---
 
@@ -98,9 +100,8 @@
 **NOT AN OFFICIAL MINECRAFT PRODUCT.**
 **NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**
 
-非官方 Minecraft 产品。未经 Mojang 或 Microsoft 认可，亦与其无关联。
-Minecraft 是 Mojang Studios 的商标。
+Minecraft is a trademark of Mojang Studios.
 
-© 2026 苦力怕团队 · 保留一切权利
+© 2026 KLP Team · All rights reserved
 
 </div>
